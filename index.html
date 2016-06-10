@@ -3,6 +3,8 @@
 Your location: <span id='current-location'>Fetching your location...</span>
 </p>
 
+
+<script src='http://code.responsivevoice.org/responsivevoice.js'></script>
 <script>
   (function() {
     var LocationDOMElement = document.getElementById('current-location');
@@ -44,11 +46,11 @@ Your location: <span id='current-location'>Fetching your location...</span>
   }());
 
   (function() {
-    var GeocodeBaseURI = "https://maps.googleapis.com/maps/api/geocode/json";
-    var GeocodeAPIKey = "todo";
+    var GeocodeBaseURI = 'https://maps.googleapis.com/maps/api/geocode/json';
+    var GeocodeAPIKey = 'todo';
 
     function request() {
-      //GeocodeBaseURI + "?latlng=" + latlng + "&key=" + GeocodeAPIKey;
+      //GeocodeBaseURI + '?latlng=' + latlng + '&key=' + GeocodeAPIKey;
       Ajax.get(
         'https://google.com',
         () => { alert('Success'); },
