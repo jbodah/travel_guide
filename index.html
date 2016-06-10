@@ -1,0 +1,58 @@
+<h2>Travel Guide</h2>
+<p>
+Your location: <span id='current-location'>Fetching your location...</span>
+</p>
+
+<script>
+  (function() {
+    var LocationDOMElement = document.getElementById('current-location');
+
+    function getLocation() {
+      navigator.geolocation.getCurrentPosition(showPosition, handlePositionError);
+    }
+
+    function showPosition(position) {
+      longitude = position.coords.longitude;
+      latitude = position.coords.latitude;
+      LocationDOMElement.innerHTML = `${longitude}, ${latitude}`;
+    }
+
+    function handlePositionError(error) {
+      alert(error.message);
+    }
+
+    getLocation();
+  })();
+
+  Ajax = new Object;
+  Ajax.get = function(uri, successHandler, errorHandler) {
+    httpRequest = new XMLHttpRequest;
+    httpRequest.onreadystatechange = function() {
+      debugger;
+      if (httpRequest.readyState === XMLHttpRequest.DONE) {
+        if (httpRequest.status === 200) {
+          successHandler();
+        } else {
+          errorHandler();
+        }
+      }
+    }
+    httpRequest.open('GET', uri);
+    httpRequest.send();
+  }
+
+  (function() {
+    var GeocodeBaseURI = "https://maps.googleapis.com/maps/api/geocode/json";
+    var GeocodeAPIKey = "todo";
+
+    function request() {
+      //GeocodeBaseURI + "?latlng=" + latlng + "&key=" + GeocodeAPIKey;
+      Ajax.get(
+        'https://google.com',
+        () => { alert('Success'); },
+        () => { alert('Error'); }
+      );
+      httpRequest.open('GET', 'https://google.com');
+    }
+  })();
+</script>
