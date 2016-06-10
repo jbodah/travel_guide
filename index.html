@@ -24,22 +24,24 @@ Your location: <span id='current-location'>Fetching your location...</span>
     getLocation();
   })();
 
-  Ajax = new Object;
-  Ajax.get = function(uri, successHandler, errorHandler) {
-    httpRequest = new XMLHttpRequest;
-    httpRequest.onreadystatechange = function() {
-      debugger;
-      if (httpRequest.readyState === XMLHttpRequest.DONE) {
-        if (httpRequest.status === 200) {
-          successHandler();
-        } else {
-          errorHandler();
+  Ajax = (function() {
+    return {
+      get: function(uri, successHandler, errorHandler) {
+        httpRequest = new XMLHttpRequest;
+        httpRequest.onreadystatechange = function() {
+          if (httpRequest.readyState === XMLHttpRequest.DONE) {
+            if (httpRequest.status === 200) {
+              successHandler();
+            } else {
+              errorHandler();
+            }
+          }
         }
+        httpRequest.open('GET', uri);
+        httpRequest.send();
       }
     }
-    httpRequest.open('GET', uri);
-    httpRequest.send();
-  }
+  }());
 
   (function() {
     var GeocodeBaseURI = "https://maps.googleapis.com/maps/api/geocode/json";
