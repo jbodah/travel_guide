@@ -1,7 +1,12 @@
 <h2>Travel Guide</h2>
 <p>
-Your location: <span id='current-location'>Fetching your location...</span>
+  Your Location: <span id='current-location'>Fetching your location...</span>
 </p>
+<p>
+  Nearby History:
+</p>
+<ul>
+</ul>
 
 
 <script src='http://code.responsivevoice.org/responsivevoice.js'></script>
@@ -33,15 +38,35 @@ Your location: <span id='current-location'>Fetching your location...</span>
         httpRequest.onreadystatechange = function() {
           if (httpRequest.readyState === XMLHttpRequest.DONE) {
             if (httpRequest.status === 200) {
+              debugger
               successHandler();
             } else {
               errorHandler();
             }
           }
         }
-        httpRequest.open('GET', uri);
+        httpRequest.open('OPTIONS', uri);
+        httpRequest.setRequestHeader('Access-Control-Request-Method', 'GET');
         httpRequest.send();
       }
+    }
+  }());
+
+  Article = (function() {
+    var BaseURI = 'https://en.wikipedia.org/w/api.php'
+    return {
+      near: function(latitude, longitude) {
+        promise = new Promise((resolve, reject) => {
+          Ajax.get(
+            `${BaseURI}?action=query&list=geosearch&gsradius=10000&gscoord=${latitude}|${longitude}&format=json`,
+            () => { debugger; resolve(); },
+            () => { debugger; reject(); }
+          );
+        });
+
+        return promise;
+      },
+      base_uri: BaseURI
     }
   }());
 
